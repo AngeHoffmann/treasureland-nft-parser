@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -5,6 +7,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Utils {
+    Binance binance = new Binance();
+    String bnbPrice = binance.getBnbPrice();
+
+    public Utils() throws IOException, ParseException {
+    }
+
     /**
      * Printing Map values
      *
@@ -75,7 +83,10 @@ public class Utils {
         return map.get(name);
     }
 
-    public HashMap<String, List<String>> showNftInfo(HashMap<String, List<String>> map) {
+    public HashMap<String, List<String>> showNftInfo(HashMap<String, List<String>> map) throws IOException, ParseException {
+//        Binance binance = new Binance();
+//        String bnb = binance.getPriceBNBUSDT();
+
         List<String> uniqueNFTs = getList(map, "name").stream().
                 sorted().
                 distinct().
@@ -93,10 +104,16 @@ public class Utils {
             result.put(uniqueNFTs.get(j), new ArrayList<>());
         }
 
-        // наполняем мапу
+        // наполняем мапу c конвертацией USDT/BUSD в BNB
         for (int i = 0; i < nftCounts; i++) {
             List<String> currentList = result.get(names.get(i));
-            currentList.add(prices.get(i) + " " + symbols.get(i));
+            if (symbols.get(i).contains("BUSD") || symbols.get(i).contains("USDT")) {
+                Double convertedPrice = Double.parseDouble(prices.get(i)) / Double.parseDouble(bnbPrice);
+//                System.out.printf("%s %s -> %.4f BNB*\n", prices.get(i), symbols.get(i), convertedPrice);
+                currentList.add(String.format("%.4f BNB*", convertedPrice));
+            } else {
+                currentList.add(prices.get(i) + " " + symbols.get(i));
+            }
             result.put(names.get(i), currentList);
         }
 
