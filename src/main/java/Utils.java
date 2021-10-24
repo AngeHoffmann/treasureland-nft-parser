@@ -84,9 +84,6 @@ public class Utils {
     }
 
     public HashMap<String, List<String>> showNftInfo(HashMap<String, List<String>> map) throws IOException, ParseException {
-//        Binance binance = new Binance();
-//        String bnb = binance.getPriceBNBUSDT();
-
         List<String> uniqueNFTs = getList(map, "name").stream().
                 sorted().
                 distinct().

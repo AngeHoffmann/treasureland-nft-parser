@@ -5,8 +5,8 @@ tasks:
 - ~~increase nft parsing count (17.10.21)~~
 - ~~combine all maps (19.10.21)~~
 - ~~sorting result (19.10.21)~~  
-- fix bug different symbols in price  
-- add NFT minted count (from galaxy.eco)
+- ~~fix bug different symbols in price~~
+- add NFT claiming stats (from galaxy.eco)
 - refactoring  
 - integrate app with tg bot
 - launch bot at cloud 
